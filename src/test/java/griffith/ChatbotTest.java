@@ -27,7 +27,22 @@ class ChatbotTest {
 	}
 
 	@Test
-	void testMain() {
+	void testIsDateWithinRange() {
+		fail("Not yet implemented");
+	}
+
+	@Test
+	void testIsDateValid() {
+		fail("Not yet implemented");
+	}
+
+	@Test
+	void testGetTemperature() {
+		fail("Not yet implemented");
+	}
+
+	@Test
+	void testGetTempSuggestions() {
 		fail("Not yet implemented");
 	}
 
