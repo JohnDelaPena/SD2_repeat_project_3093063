@@ -34,4 +34,9 @@ public class OpenWeatherMapResponse {
 		return windSpeed;
 	}
 
+	@Override
+	public String toString() {
+		return String.format("Weather: %s\nTemperature: %.2f°C\nHumidity: %.2f%%\nWind Speed: %.2f m/s",
+				weatherDescription, temperature, humidity, windSpeed);
+	}
 }	
