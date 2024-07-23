@@ -9,10 +9,10 @@ public class Chatbot {
 
 	public static Scanner scan = new Scanner(System.in); //Create an instance of scanner.
 	private static final SimpleDateFormat DATE_FORMAT = new SimpleDateFormat("yyyy-MM-dd"); //Create a constant DATE_FORMAT.
-	
+
 	public static void main(String[] args) {
 		String input = ""; //Create a variable which takes in inputs.
-		
+
 
 		while (true) {
 			System.out.println("Greetings, I am yapMaxx. Would you like to get clothing suggestions for a specific location and date? (Y/N)"); //Prompt user to make an input.
@@ -25,17 +25,17 @@ public class Chatbot {
 				String city = scan.nextLine(); // Read user input for city.
 				System.out.println("Enter a date within then next 30 days in the format (YYYY-MM-DD)");//Prompt user to enter a date.
 				String inputDate = scan.nextLine();//Read user input for date.
-				
-				 // Validate date format
-                Date date;
-                try {
-                    date = DATE_FORMAT.parse(inputDate);
-                } catch (ParseException e) {
-                    System.out.println("Invalid date format. Please use YYYY-MM-DD.");
-                    continue; // Retry the loop
-                }
-				
-				
+
+				// Validate date format
+				Date date;
+				try {
+					date = DATE_FORMAT.parse(inputDate);
+				} catch (ParseException e) {
+					System.out.println("Invalid date format. Please use YYYY-MM-DD.");
+					continue; // Retry the loop
+				}
+
+
 				System.out.println("This is the weather report for " +city.toUpperCase() +", " +country.toUpperCase() +"." +"\n");//Generate Weather Report.
 				getWeatherReport(city,country,inputDate);//Call getWeatherReport method.
 				break;
@@ -49,7 +49,7 @@ public class Chatbot {
 	}
 
 	public static void getWeatherReport(String city, String country,String inputDate) {
-		
+
 		OpenWeatherMapAPI weatherAPI = new OpenWeatherMapAPI();//Create an instance of OpenWeatherAPI
 		try {
 			OpenWeatherMapResponse weatherResponse = weatherAPI.getWeatherData(city, country, inputDate); //Call API.
@@ -62,20 +62,20 @@ public class Chatbot {
 			System.out.println(e.getMessage() +	", Please Try again."); // Print specific error message.
 		}
 	}
-	
-	public static boolean isDateWithinRange() {
+
+	public static boolean isDateWithinRange(String inputDate) {
 		return false;
 	}
-	
-	
+
+
 	public static boolean isDateValid(Date date) {
 		return false;
 	}
-	
+
 	public static double getTemperature() {
 		return 0;
 	}
-	
+
 	public static String getTempSuggestions(double temperature) {
 		return "";
 	}

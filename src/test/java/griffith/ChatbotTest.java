@@ -28,7 +28,18 @@ class ChatbotTest {
 
 	@Test
 	void testIsDateWithinRange() {
-		fail("Not yet implemented");
+		Chatbot chatbot= new Chatbot();//Create an instance of chatbot.
+		
+		//Dates are in the format YYYY-MM-DD
+		
+		String inputDate="2024-07-23";  //Test for today.
+		assertTrue(chatbot.isDateWithinRange(inputDate));
+		
+		String inputDate2="2024-08-22"; //Test for 30 days from today.
+		assertTrue(chatbot.isDateWithinRange(inputDate2));
+		
+		String inputDate3="2024-09-23"; //Test for more than 30 days from today.
+		assertTrue(chatbot.isDateWithinRange(inputDate3));
 	}
 
 	@Test
