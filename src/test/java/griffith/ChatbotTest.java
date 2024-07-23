@@ -8,6 +8,11 @@ import org.junit.jupiter.api.BeforeAll;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
+import java.text.SimpleDateFormat;
+import java.util.Calendar;
+import java.util.Date;
+
+
 class ChatbotTest {
 
 	@BeforeAll
@@ -29,17 +34,36 @@ class ChatbotTest {
 	@Test
 	void testIsDateWithinRange() {
 		Chatbot chatbot= new Chatbot();//Create an instance of chatbot.
-		
-		//Dates are in the format YYYY-MM-DD
-		
-		String inputDate="2024-07-23";  //Test for today.
-		assertTrue(chatbot.isDateWithinRange(inputDate));
-		
-		String inputDate2="2024-08-22"; //Test for 30 days from today.
-		assertTrue(chatbot.isDateWithinRange(inputDate2));
-		
-		String inputDate3="2024-09-23"; //Test for more than 30 days from today.
-		assertTrue(chatbot.isDateWithinRange(inputDate3));
+		SimpleDateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd");
+
+
+		// Test for today
+		Date today = new Date();
+		String inputDateToday = dateFormat.format(today);
+		assertTrue(chatbot.isDateWithinRange(inputDateToday), "Expected true but was false for today's date");
+
+
+		//Test for 30 days from today.
+		Calendar calendar = Calendar.getInstance();
+		calendar.setTime(today);
+		calendar.add(Calendar.DAY_OF_YEAR, 30);
+		String thirtyDaysFromNow =  dateFormat.format(calendar.getTime());
+		assertTrue(chatbot.isDateWithinRange(inputDateToday), "Expected true but was false for 30 days from today.");
+
+		//Test for date beyond 30 days from today.
+		calendar.setTime(today);
+		calendar.add(Calendar.DAY_OF_YEAR, 31);
+		String beyondThirtyDaysFromNow =  dateFormat.format(calendar.getTime());
+		assertFalse(chatbot.isDateWithinRange(beyondThirtyDaysFromNow), "Expected false but was true for 31 days from today.");
+
+		//Test for date less than today.
+		calendar.setTime(today);
+		calendar.add(Calendar.DAY_OF_YEAR, -1);
+		String lessThanToday =  dateFormat.format(calendar.getTime());
+		assertFalse(chatbot.isDateWithinRange(lessThanToday), "Expected false but was true for days less today.");
+
+
+
 	}
 
 	@Test

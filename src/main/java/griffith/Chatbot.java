@@ -2,8 +2,10 @@ package griffith;
 
 import java.util.Scanner;//Import scanner.
 import java.text.SimpleDateFormat;//Import Simple Date Format.
+import java.util.Calendar;
 import java.util.Date;//Import Date.
 import java.text.ParseException; //Import Parse Exception.
+
 
 public class Chatbot {
 
@@ -23,20 +25,23 @@ public class Chatbot {
 				String country = scan.nextLine();//Read User input for country.
 				System.out.println("Now enter a city in this country.");//Prompt user to enter city.
 				String city = scan.nextLine(); // Read user input for city.
-				System.out.println("Enter a date within then next 30 days in the format (YYYY-MM-DD)");//Prompt user to enter a date.
-				String inputDate = scan.nextLine();//Read user input for date.
-
-				// Validate date format
-				Date date;
-				try {
-					date = DATE_FORMAT.parse(inputDate);
-				} catch (ParseException e) {
-					System.out.println("Invalid date format. Please use YYYY-MM-DD.");
-					continue; // Retry the loop
+				
+				String inputDate="";
+				while(true) {
+					System.out.println("Enter a date within the next 30 days in the format (yyyy-MM-dd)");//Prompt user to enter a date.
+					inputDate = scan.nextLine();//Read user input for date.
+					
+				
+					if(isDateWithinRange(inputDate)) {
+						break;
+					}
+					
+					else {
+						System.out.print("Date is out range. ");
+					}
 				}
 
-
-				System.out.println("This is the weather report for " +city.toUpperCase() +", " +country.toUpperCase() +"." +"\n");//Generate Weather Report.
+				System.out.println("This is the weather report for " +city.toUpperCase() +", " +country.toUpperCase() +", " +inputDate +"." +"\n");//Generate Weather Report.
 				getWeatherReport(city,country,inputDate);//Call getWeatherReport method.
 				break;
 			} else if (input.equalsIgnoreCase("N")) { //If User types "N".
@@ -64,7 +69,34 @@ public class Chatbot {
 	}
 
 	public static boolean isDateWithinRange(String inputDate) {
-		return false;
+		
+		try {
+			 Date date = DATE_FORMAT.parse(inputDate); // Parse inputDate.
+		        Date today = new Date(); // Get today's date.
+		        
+		        // Reset the time part to 00:00:00.000 for accurate comparison
+		        Calendar todayCalendar = Calendar.getInstance();
+		        todayCalendar.setTime(today);
+		        todayCalendar.set(Calendar.HOUR_OF_DAY, 0);
+		        todayCalendar.set(Calendar.MINUTE, 0);
+		        todayCalendar.set(Calendar.SECOND, 0);
+		        todayCalendar.set(Calendar.MILLISECOND, 0);
+		        today = todayCalendar.getTime();
+		        
+		        // Calculate 30 days from today.
+		        Calendar c = Calendar.getInstance();
+		        c.setTime(today);
+		        c.add(Calendar.DATE, 30);
+		        Date thirtyDaysFromNow = c.getTime();
+
+			//Check if the date is within range.
+			return !date.before(today) && !date.after(thirtyDaysFromNow);
+		} catch (ParseException e) {
+			// Handle invalid date format
+			System.out.println("Invalid date format. Please use YYYY-MM-DD.");
+			return false;
+
+		}
 	}
 
 
